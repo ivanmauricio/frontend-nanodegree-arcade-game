@@ -136,8 +136,9 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
+        
+        clearScore();
+        renderScore();
         renderEntities();
     }
 
@@ -154,6 +155,16 @@ var Engine = (function(global) {
         });
 
         player.render();
+    }
+//TO DO WRITE COMMENT
+    function renderScore() {
+        ctx.font = "35px Impact";
+        ctx.fillStyle = "#9F2A04";
+        ctx.fillText("SCORE: " + points, 350, 40);
+    }
+//TO DO WRITE COMMENT
+    function clearScore() {
+            ctx.clearRect(0, 0, canvas.width, 50);
     }
 
     /* This function does nothing but it could have been a good place to
