@@ -11,7 +11,7 @@ var Enemy = function(locY, speed) {
     this.sprite = 'images/enemy-bug.png';
     this.x = 0;
     this.y = locY;
-    //set dimensions of enemy so can use in collision method
+    //set dimensions of enemy to use in collision method
     this.right = 80;
     this.left = 0;
     this.bottom = 75;
@@ -99,6 +99,24 @@ Player.prototype.handleInput = function(key) {
         this.x += 50;
 }
 
+//TODO ADD COMMENTS
+var Gem = function() {
+    this.sprite = 'images/gem-blue.png';
+    this.x = -200;
+    this.y = 145;
+    this.speed = 150;
+}
+
+//TODO ADD COMMENTS
+
+Gem.prototype.update = function(dt) {
+    this.x = this.x + (this.speed * dt);
+}
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -112,6 +130,8 @@ var allEnemies = [new Enemy(62, 200),
                   new Enemy(62, 100)];
 
 var player = new Player();
+
+var gem = new Gem();
 
 
 // This listens for key presses and sends the keys to your
