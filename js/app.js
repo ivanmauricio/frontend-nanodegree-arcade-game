@@ -26,10 +26,10 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + (this.speed * dt);
-    //resets the enemies position
-    if (this.x >= 750)
+    //resets the enemies position when it goess off screen
+    if (this.x >= 750){
         this.x = 0;
-
+    }
 }
 
 //Make collision method for enemy
@@ -102,19 +102,23 @@ Player.prototype.handleInput = function(key) {
 //TODO ADD COMMENTS
 var Gem = function(locY) {
     this.sprite = 'images/gem-blue.png';
-    this.x = 600;
+    this.x = -200;
     this.y = locY;
     this.left = 0;
     this.right = 30;
     this.top = -48;
     this.bottom = 15;
-    this.speed = 50;
+    this.speed = 200;
 }
 
 //TODO ADD COMMENTS
 
 Gem.prototype.update = function(dt) {
-    this.x = this.x - (this.speed * dt);
+    this.x = this.x + (this.speed * dt);
+    //reset gem position when it goes off screen
+    if (this.x >= 750) {
+        this.reset();
+    }
 }
 
 //TODO WRITE COMMENT

@@ -94,7 +94,7 @@ var Engine = (function(global) {
      //TO DO ADD COMMENT   
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
-            //enemy.collision();
+            enemy.collision();
         });
         player.update();
         //TODO ADD COMMENT
