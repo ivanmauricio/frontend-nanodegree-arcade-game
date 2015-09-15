@@ -100,23 +100,46 @@ Player.prototype.handleInput = function(key) {
 }
 
 //TODO ADD COMMENTS
-var Gem = function() {
+var Gem = function(locY) {
     this.sprite = 'images/gem-blue.png';
-    this.x = -200;
-    this.y = 145;
-    this.speed = 150;
+    this.x = 600;
+    this.y = locY;
+    this.left = 0;
+    this.right = 30;
+    this.top = -48;
+    this.bottom = 15;
+    this.speed = 50;
 }
 
 //TODO ADD COMMENTS
 
 Gem.prototype.update = function(dt) {
-    this.x = this.x + (this.speed * dt);
+    this.x = this.x - (this.speed * dt);
 }
 
+//TODO WRITE COMMENT
 Gem.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, Resources.get(this.sprite).width * 0.5,
+    Resources.get(this.sprite).height*0.5);
 }
 
+//TODO ADD COMMENT
+
+Gem.prototype.collision = function () {
+    if(this.x + this.left < player.x + player.right &&
+       this.x + this.right > player.x + player.left &&
+       this.y + this.top < player.y + player.bottom &&
+       this.y + this.bottom > player.y + player.top){
+        this.reset();
+        points += 5;
+    }
+}
+
+//TODO ADD COMMENT
+
+Gem.prototype.reset = function() {
+    this.x = -200;
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -131,7 +154,7 @@ var allEnemies = [new Enemy(62, 200),
 
 var player = new Player();
 
-var gem = new Gem();
+var allGems = [new Gem(112), new Gem(195), new Gem(278)];
 
 
 // This listens for key presses and sends the keys to your

@@ -94,10 +94,14 @@ var Engine = (function(global) {
      //TO DO ADD COMMENT   
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
-            enemy.collision();
+            //enemy.collision();
         });
         player.update();
-        gem.update(dt);
+        //TODO ADD COMMENT
+        allGems.forEach(function(gem) {
+            gem.update(dt);
+            gem.collision();
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -157,7 +161,9 @@ var Engine = (function(global) {
         });
 
         player.render();
-        gem.render();
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
     }
 //TO DO WRITE COMMENT
     function renderScore() {
