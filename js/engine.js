@@ -56,7 +56,9 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        if (!pauseGame){
+            win.requestAnimationFrame(main);
+        };
     };
 
     /* This function does some initial setup that should only occur once,
@@ -182,6 +184,12 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+    }
+
+//Add global init function so can access it from app.js to pause and unpause game
+
+    globalInit = function() {
+        init();
     }
 
     /* Go ahead and load all of the images we know we're going to need to

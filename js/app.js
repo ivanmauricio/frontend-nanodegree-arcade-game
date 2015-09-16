@@ -1,5 +1,6 @@
 //GLOBAL VARIABLES
-var points = 0;
+var points = 0,
+    pauseGame = false;
 
 // Enemies our player must avoid
 var Enemy = function(locY) {
@@ -99,6 +100,13 @@ Player.prototype.handleInput = function(key) {
         this.x -= 50;
     if (key == "right" && this.x < 400)
         this.x += 50;
+    //TODO ADD COMMENT
+    if (key == "p" && !pauseGame)
+        pauseGame = true;
+    else if (key == "p" && pauseGame) {
+        pauseGame = false;
+        globalInit();
+    };
 }
 
 //TODO ADD COMMENTS
@@ -177,7 +185,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        80: 'p'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
