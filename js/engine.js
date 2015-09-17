@@ -56,9 +56,12 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        if (!pauseGame){
+        if (!pauseGame) {
             win.requestAnimationFrame(main);
-        };
+        }
+        else if (pauseGame) {
+            pause();
+        }
     };
 
     /* This function does some initial setup that should only occur once,
@@ -158,20 +161,27 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
         player.render();
-        allGems.forEach(function(gem) {
-            gem.render();
-        });
     }
 //TO DO WRITE COMMENT
     function renderScore() {
-        ctx.font = "35px Impact";
-        ctx.fillStyle = "#9F2A04";
+        ctx.font = "30px Comic Sans MS";
+        ctx.textAlign = "start";
+
+        ctx.fillStyle = "red";
         ctx.fillText("SCORE: " + points, 350, 40);
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1.5;
+        ctx.strokeText("SCORE: " + points, 350, 40);
     }
 //TO DO WRITE COMMENT
     function clearScore() {
@@ -184,6 +194,20 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+//TODO ADD COMMENT
+
+    function pause() {
+        ctx.font = "60px Comic Sans MS";
+        ctx.textAlign = "center";
+    
+        ctx.fillStyle = "red";
+        ctx.fillText("PAUSED", canvas.width/2, 280);
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        ctx.strokeText("PAUSED", canvas.width/2, 280);
     }
 
 //Add global init function so can access it from app.js to pause and unpause game
