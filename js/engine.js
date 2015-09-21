@@ -56,13 +56,21 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        if (!pauseGame) {
+
+        if (lives === 0) {
+            gameOver();
+        }
+        else if (points >= 150) {
+            clearScore();
+            winner();
+        }
+        else if (!pauseGame) {
             win.requestAnimationFrame(main);
         }
         else if (pauseGame) {
             pause();
         }
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -178,11 +186,27 @@ var Engine = (function(global) {
         ctx.textAlign = "start";
 
         ctx.fillStyle = "red";
-        ctx.fillText("SCORE: " + points, 450, 40);
+        ctx.fillText("LEVEL: " + level, 470, 40);
 
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1.5;
-        ctx.strokeText("SCORE: " + points, 450, 40);
+        ctx.strokeText("LEVEL: " + level, 470, 40);
+
+        ctx.fillStyle = "red";
+        ctx.fillText("SCORE: " + points, 10, 40);
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1.5;
+        ctx.strokeText("SCORE: " + points, 10, 40);
+
+        ctx.textAlign = "center";
+
+        ctx.fillStyle = "red";
+        ctx.fillText("LIVES: " + lives, canvas.width/2, 40);
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1.5;
+        ctx.strokeText("LIVES: " + lives, canvas.width/2, 40);
     }
 //TO DO WRITE COMMENT
     function clearScore() {
@@ -211,11 +235,40 @@ var Engine = (function(global) {
         ctx.strokeText("PAUSED", canvas.width/2, 280);
     }
 
+ //todo add comment   
+
+    function gameOver() {
+        ctx.font = "60px Comic Sans MS";
+        ctx.textAlign = "center";
+    
+        ctx.fillStyle = "red";
+        ctx.fillText("GAME OVER", canvas.width/2, 280);
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        ctx.strokeText("GAME OVER", canvas.width/2, 280);
+    }
+
+//todo add comment
+
+    function winner() {
+        ctx.font = "60px Comic Sans MS";
+        ctx.textAlign = "center";
+    
+        ctx.fillStyle = "red";
+        ctx.fillText("YOU WIN!", canvas.width/2, 280);
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        ctx.strokeText("YOU WIN!", canvas.width/2, 280);
+    }
+
+
 //Add global init function so can access it from app.js to pause and unpause game
 
     globalInit = function() {
         init();
-    }
+    };
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
@@ -228,7 +281,10 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png',
         'images/gem-blue.png',
-        'images/char-horn-girl.png'
+        'images/char-horn-girl.png',
+        'images/char-cat-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png'
     ]);
     Resources.onReady(init);
 
