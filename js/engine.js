@@ -25,8 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 606;
+    canvas.height = 707;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -122,13 +122,14 @@ var Engine = (function(global) {
         var rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 3 of stone
+                'images/grass-block.png',   // Row 1 of 3 of grass
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/grass-block.png',   // Row 2 of 3 of grass
+                'images/grass-block.png'    // Row 3 of 3 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = 7,
+            numCols = 6,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -177,11 +178,11 @@ var Engine = (function(global) {
         ctx.textAlign = "start";
 
         ctx.fillStyle = "red";
-        ctx.fillText("SCORE: " + points, 350, 40);
+        ctx.fillText("SCORE: " + points, 450, 40);
 
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1.5;
-        ctx.strokeText("SCORE: " + points, 350, 40);
+        ctx.strokeText("SCORE: " + points, 450, 40);
     }
 //TO DO WRITE COMMENT
     function clearScore() {
@@ -226,7 +227,8 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/gem-blue.png'
+        'images/gem-blue.png',
+        'images/char-horn-girl.png'
     ]);
     Resources.onReady(init);
 

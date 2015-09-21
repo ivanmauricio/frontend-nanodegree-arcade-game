@@ -10,7 +10,7 @@ var Enemy = function(locY) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = -100;
+    this.x = -200;
     this.y = locY;
     //set dimensions of enemy to use in collision method
     this.right = 80;
@@ -29,7 +29,7 @@ Enemy.prototype.update = function(dt) {
     this.x = this.x + (this.speed * dt);
     //resets the enemies position when it goess off screen and assigns
     //new speed
-    if (this.x >= 550){
+    if (this.x >= 700){
         this.x = -200;
         this.speed = randomSpeed(); 
     }
@@ -59,8 +59,8 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 203;
-    this.y = 407;
+    this.x = 253;
+    this.y = 491;
     //set the dimensions of the player so can work out collisions
     this.right = 80;
     this.left = 0;
@@ -73,6 +73,8 @@ Player.prototype.update = function() {
         this.reset();
         points += 10;
     }
+    if (points > 10)
+        this.sprite = "images/char-horn-girl.png"
 }
 
 Player.prototype.render = function() {
@@ -83,8 +85,8 @@ Player.prototype.render = function() {
 //after collisions or reaching the water
 
 Player.prototype.reset = function() {
-    this.x = 203;
-    this.y = 407;
+    this.x = 253;
+    this.y = 491;
 }
 
 //Set the different input keys to move the player
@@ -94,11 +96,11 @@ Player.prototype.reset = function() {
 Player.prototype.handleInput = function(key) {
     if (key == "up" && this.y > 0)
         this.y -= 42;
-    if (key == "down" && this.y < 407)
+    if (key == "down" && this.y < 491)
         this.y += 42;
     if (key == "left" && this.x > 50)
         this.x -= 50;
-    if (key == "right" && this.x < 400)
+    if (key == "right" && this.x < 500)
         this.x += 50;
     //TODO ADD COMMENT
     if (key == "p" && !pauseGame)
@@ -162,14 +164,14 @@ Gem.prototype.reset = function() {
 
 var allEnemies = [new Enemy(62),
                   new Enemy(62),
-                  new Enemy(145),
-                  new Enemy(145),
                   new Enemy(228),
-                  new Enemy(228)];
+                  new Enemy(228),
+                  new Enemy(311),
+                  new Enemy(311)];
 
 var player = new Player();
 
-var allGems = [new Gem(112), new Gem(195), new Gem(278)];
+var allGems = [new Gem(116), new Gem(282), new Gem(365)];
 
 //randomSpeed function for setting spped of enemies and gems
 
