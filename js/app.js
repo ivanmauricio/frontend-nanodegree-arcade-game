@@ -14,7 +14,9 @@ var Enemy = function(locY) {
     this.sprite = 'images/enemy-bug.png';
     this.x = -200;
     this.y = locY;
+
     //set dimensions of enemy to use in collision method
+
     this.right = 80;
     this.left = 0;
     this.bottom = 75;
@@ -31,20 +33,19 @@ Enemy.prototype.update = function(dt) {
     this.x = this.x + (this.speed * dt);
     //resets the enemies position when it goess off screen and assigns
     //new speed
-    if (this.x >= 700){
+    if(this.x >= 700) {
         this.x = -200;
-        this.speed = randomSpeed(); 
+        this.speed = randomSpeed();
     }
 };
 
 //Make collision method for enemy
-//TODO add collision method to undate entities function in engine
 
 Enemy.prototype.collision = function(){
     if(this.x + this.left < player.x + player.right &&
        this.x + this.right > player.x + player.left &&
        this.y + this.top < player.y + player.bottom &&
-       this.y + this.bottom > player.y + player.top){
+       this.y + this.bottom > player.y + player.top) {
         lives--;
         player.reset();
     }
@@ -81,14 +82,18 @@ Player.prototype.update = function() {
     //Every 30 points go up a level and character changes
     level = 1 + Math.floor(points/30);
 
-    if (points >= 30)
+    if (points >= 30) {
         this.sprite = "images/char-cat-girl.png";
-    if (points >= 60)
+    }
+    if (points >= 60) {
         this.sprite = "images/char-pink-girl.png";
-    if (points >= 90)
+    }
+    if (points >= 90) {
         this.sprite = "images/char-horn-girl.png";
-    if (points >= 120)
+    }
+    if (points >= 120) {
         this.sprite = "images/char-princess-girl.png";
+    }
 };
 
 Player.prototype.render = function() {
@@ -104,28 +109,40 @@ Player.prototype.reset = function() {
 };
 
 //Set the different input keys to move the player
-//this method moves player in required direction while at the same time setting limits to 
+//this method moves player in required direction while at the same time setting limits to
 //stop movement out of the canvas boundaries.
 
 Player.prototype.handleInput = function(key) {
-    if (key == "up" && this.y > 0 && !pauseGame)
+
+    //Sets the arrow keys to change player position as long as within canvas limits and
+    //game not paused
+    if (key == "up" && this.y > 0 && !pauseGame) {
         this.y -= 42;
-    if (key == "down" && this.y < 491 && !pauseGame)
+    }
+    if (key == "down" && this.y < 491 && !pauseGame) {
         this.y += 42;
-    if (key == "left" && this.x > 50 && !pauseGame)
+    }
+    if (key == "left" && this.x > 50 && !pauseGame) {
         this.x -= 50;
-    if (key == "right" && this.x < 500 && !pauseGame)
+    }
+    if (key == "right" && this.x < 500 && !pauseGame) {
         this.x += 50;
-    //TODO ADD COMMENT
-    if (key == "p" && !pauseGame)
+    }
+
+    //Sets the p to pause and unpause game
+
+    if (key == "p" && !pauseGame) {
         pauseGame = true;
+    }
+
+    //calls the init function from engine.js to start game again
     else if (key == "p" && pauseGame) {
         pauseGame = false;
         globalInit();
     }
 };
 
-//TODO ADD COMMENTS
+//Gem class with shared values common to all gems
 var Gem = function(locY) {
     this.sprite = 'images/gem-blue.png';
     this.x = -200;
@@ -137,10 +154,12 @@ var Gem = function(locY) {
     this.speed = randomSpeed();
 };
 
-//TODO ADD COMMENTS
+//Update method for Gem class resets position when they go off screen
+//and assigns a new random speed to gem
 
 Gem.prototype.update = function(dt) {
     this.x = this.x + (this.speed * dt);
+
     //reset gem position when it goes off screen
     if (this.x >= 750) {
         this.reset();
@@ -148,25 +167,26 @@ Gem.prototype.update = function(dt) {
     }
 };
 
-//TODO WRITE COMMENT
+//Draw the gem on the canvas, scaling it to 50% of actual png size
+
 Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, Resources.get(this.sprite).width * 0.5,
     Resources.get(this.sprite).height*0.5);
 };
 
-//TODO ADD COMMENT
+//Collision method for gem, resets the gems position and adds 5 points to score
 
 Gem.prototype.collision = function () {
     if(this.x + this.left < player.x + player.right &&
        this.x + this.right > player.x + player.left &&
        this.y + this.top < player.y + player.bottom &&
-       this.y + this.bottom > player.y + player.top){
+       this.y + this.bottom > player.y + player.top) {
         this.reset();
         points += 5;
     }
 };
 
-//TODO ADD COMMENT
+//reset method for gem to reset position
 
 Gem.prototype.reset = function() {
     this.x = -200;
@@ -187,20 +207,26 @@ var player = new Player();
 
 var allGems = [new Gem(116), new Gem(282), new Gem(365)];
 
-//randomSpeed function for setting spped of enemies and gems
+//randomSpeed function for setting speed of enemies and gems
 
 function randomSpeed() {
-//TODO ADD COMMENT
-    if (points < 30)
-        return Math.floor((Math.random() * 200) + 50);
-    else if (30 <= points < 60)
-        return Math.floor((Math.random() * 250) + 100);
-    else if (60 <= points < 90)
-        return Math.floor((Math.random() * 300) + 150);
-    else if (90 <= points < 120)
-        return Math.floor((Math.random() * 350) + 200);
-    else
-        return Math.floor((Math.random() * 400) + 250);
+
+//randomSpeed function increases the enemies and gem's speeds for increasing levels
+    if (level === 1) {
+        return Math.floor((Math.random() * 150) + 50);
+    }
+    else if (level === 2) {
+        return Math.floor((Math.random() * 200) + 100);
+    }
+    else if (level === 3) {
+        return Math.floor((Math.random() * 250) + 150);
+    }
+    else if (level === 4) {
+        return Math.floor((Math.random() * 300) + 200);
+    }
+    else {
+        return Math.floor((Math.random() * 350) + 250);
+    }
 }
 
 // This listens for key presses and sends the keys to your

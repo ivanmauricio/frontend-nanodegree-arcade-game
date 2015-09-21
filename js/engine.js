@@ -104,13 +104,13 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-     //TO DO ADD COMMENT   
+     //Added enemy collision method to updateEntities to check for collisions
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
             enemy.collision();
         });
         player.update();
-        //TODO ADD COMMENT
+        //Added gem update and collion method to updateEntities
         allGems.forEach(function(gem) {
             gem.update(dt);
             gem.collision();
@@ -156,7 +156,7 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-        
+
         clearScore();
         renderScore();
         renderEntities();
@@ -180,7 +180,7 @@ var Engine = (function(global) {
 
         player.render();
     }
-//TO DO WRITE COMMENT
+//Draws the score, lives and level on the top of the canvas
     function renderScore() {
         ctx.font = "30px Comic Sans MS";
         ctx.textAlign = "start";
@@ -208,7 +208,7 @@ var Engine = (function(global) {
         ctx.lineWidth = 1.5;
         ctx.strokeText("LIVES: " + lives, canvas.width/2, 40);
     }
-//TO DO WRITE COMMENT
+//clears the top of the canvas so that score, lives and level can be updated
     function clearScore() {
             ctx.clearRect(0, 0, canvas.width, 50);
     }
@@ -218,15 +218,14 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
-//TODO ADD COMMENT
+//pause function to draw a pause screen on canvas when game is paused
 
     function pause() {
         ctx.font = "60px Comic Sans MS";
         ctx.textAlign = "center";
-    
+
         ctx.fillStyle = "red";
         ctx.fillText("PAUSED", canvas.width/2, 280);
 
@@ -235,12 +234,12 @@ var Engine = (function(global) {
         ctx.strokeText("PAUSED", canvas.width/2, 280);
     }
 
- //todo add comment   
+ //draws a game over screen on canvas when lives run out
 
     function gameOver() {
         ctx.font = "60px Comic Sans MS";
         ctx.textAlign = "center";
-    
+
         ctx.fillStyle = "red";
         ctx.fillText("GAME OVER", canvas.width/2, 280);
 
@@ -249,12 +248,12 @@ var Engine = (function(global) {
         ctx.strokeText("GAME OVER", canvas.width/2, 280);
     }
 
-//todo add comment
+//Draws YOU WIN! on canvas when score is more than 150
 
     function winner() {
         ctx.font = "60px Comic Sans MS";
         ctx.textAlign = "center";
-    
+
         ctx.fillStyle = "red";
         ctx.fillText("YOU WIN!", canvas.width/2, 280);
 
