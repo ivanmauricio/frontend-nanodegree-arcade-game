@@ -1,10 +1,24 @@
-//GLOBAL VARIABLES
+/* App.js
+ * This file provides the player, enemy and bug classes and their methods.
+ * It also contains the global variables which keep a track of the points,
+ * lives and which level the player is on. The game state is also tracked
+ * (whether it is paused or not). The players, the enemies and the gems are
+ * also instantiated in ths file.
+ */
+
+//Global Variables
+
+'use strict';
+
 var points = 0,
     pauseGame = false,
     level = 1,
     lives = 4;
 
-// Enemies our player must avoid
+/* This makes the enemy class. It takes the parameter locY which specifies
+ * where on the canvas each instance will first be drawn.
+ */
+
 var Enemy = function(locY) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -32,14 +46,17 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x = this.x + (this.speed * dt);
     //resets the enemies position when it goess off screen and assigns
-    //new speed
+    //new random speed
     if(this.x >= 700) {
         this.x = -200;
         this.speed = randomSpeed();
     }
 };
 
-//Make collision method for enemy
+/* Collision method for when enemy collides with the player. When
+ * player collides with enemy a life is deducted and the player is
+ * reset back to starting position.
+ */
 
 Enemy.prototype.collision = function(){
     if(this.x + this.left < player.x + player.right &&
@@ -61,6 +78,10 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+/* Player class which sets the properties of the player, including
+ * starting position and dimensions.
+ */
+
 var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 253;
@@ -71,6 +92,12 @@ var Player = function() {
     this.bottom = 60;
     this.top = 0;
 };
+
+/* Update method for player which adds point everytime it reaches the
+ * water and increases the level by one every 30 points. It also changes
+ * the player image every 30 points as the player 'evolves' through the
+ * levels.
+ */
 
 Player.prototype.update = function() {
     //Add 10 points when player reaches water and then reset player position
@@ -96,12 +123,16 @@ Player.prototype.update = function() {
     }
 };
 
+/* Render method for player which draws the player on the canvas.
+ */
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-//Make reset method for player to put him back in starting position
-//after collisions or reaching the water
+/* Make reset method for player to put him back in starting position
+ * after collisions or reaching the water.
+ */
 
 Player.prototype.reset = function() {
     this.x = 253;
@@ -142,11 +173,18 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-//Gem class with shared values common to all gems
+/* Gem class with shared values common to all gems. It takes the
+ * locY paremeter to specify the y location where it shold be drawn.
+ * Also assigns random speed to gems.
+ */
+
 var Gem = function(locY) {
     this.sprite = 'images/gem-blue.png';
     this.x = -200;
     this.y = locY;
+
+    //sets enemy dimesnsions to use for collisions
+
     this.left = 0;
     this.right = 30;
     this.top = -48;
@@ -154,8 +192,8 @@ var Gem = function(locY) {
     this.speed = randomSpeed();
 };
 
-//Update method for Gem class resets position when they go off screen
-//and assigns a new random speed to gem
+// Update method for Gem class resets position when they go off screen
+// and assigns a new random speed to gem.
 
 Gem.prototype.update = function(dt) {
     this.x = this.x + (this.speed * dt);
@@ -167,7 +205,9 @@ Gem.prototype.update = function(dt) {
     }
 };
 
-//Draw the gem on the canvas, scaling it to 50% of actual png size
+/* Render method for gem. Draw the gem on the canvas, scaling it
+ * to 50% of actual png size.
+ */
 
 Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, Resources.get(this.sprite).width * 0.5,
@@ -186,7 +226,7 @@ Gem.prototype.collision = function () {
     }
 };
 
-//reset method for gem to reset position
+// reset method for gem to reset position
 
 Gem.prototype.reset = function() {
     this.x = -200;
@@ -207,7 +247,9 @@ var player = new Player();
 
 var allGems = [new Gem(116), new Gem(282), new Gem(365)];
 
-//randomSpeed function for setting speed of enemies and gems
+/* randomSpeed function for setting speed of enemies and gems.
+ * Function sets an increaes random speed as the levels go up.
+ */
 
 function randomSpeed() {
 

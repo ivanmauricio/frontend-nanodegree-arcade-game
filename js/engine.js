@@ -58,17 +58,17 @@ var Engine = (function(global) {
          */
 
         if (lives === 0) {
-            gameOver();
+            gameOver();    // stops animation loop and draws game over screen when lives reach 0
         }
         else if (points >= 150) {
-            clearScore();
-            winner();
+            clearScore();  // stops animation loop and clears score when player reaches 150 points
+            winner();      // draws 'you win!' screen
         }
         else if (!pauseGame) {
-            win.requestAnimationFrame(main);
+            win.requestAnimationFrame(main);    // if game not paused, continues animation loop
         }
         else if (pauseGame) {
-            pause();
+            pause();    // if game paused, draws a pause game screen.
         }
     }
 
@@ -157,8 +157,8 @@ var Engine = (function(global) {
             }
         }
 
-        clearScore();
-        renderScore();
+        clearScore();    // clears score so it can be updated.
+        renderScore();    // draws updated score.
         renderEntities();
     }
 
@@ -180,7 +180,8 @@ var Engine = (function(global) {
 
         player.render();
     }
-//Draws the score, lives and level on the top of the canvas
+// renderScore function draws the score, lives and level on the top of the canvas.
+
     function renderScore() {
         ctx.font = "30px Comic Sans MS";
         ctx.textAlign = "start";
@@ -208,18 +209,19 @@ var Engine = (function(global) {
         ctx.lineWidth = 1.5;
         ctx.strokeText("LIVES: " + lives, canvas.width/2, 40);
     }
-//clears the top of the canvas so that score, lives and level can be updated
+
+// clears the top of the canvas so that score, lives and level can be updated
+
     function clearScore() {
             ctx.clearRect(0, 0, canvas.width, 50);
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
+// reset function clears the canvas so that game can be started afresh.
+
     function reset() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
+
 //pause function to draw a pause screen on canvas when game is paused
 
     function pause() {
@@ -234,7 +236,7 @@ var Engine = (function(global) {
         ctx.strokeText("PAUSED", canvas.width/2, 280);
     }
 
- //draws a game over screen on canvas when lives run out
+ //gameOver function draws a 'game over' screen on canvas when lives run out
 
     function gameOver() {
         ctx.font = "60px Comic Sans MS";
@@ -248,7 +250,7 @@ var Engine = (function(global) {
         ctx.strokeText("GAME OVER", canvas.width/2, 280);
     }
 
-//Draws YOU WIN! on canvas when score is more than 150
+//winner function draws YOU WIN! on canvas when score is more than 150
 
     function winner() {
         ctx.font = "60px Comic Sans MS";
